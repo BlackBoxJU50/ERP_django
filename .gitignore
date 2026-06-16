@@ -1,0 +1,3 @@
+# Project exclude paths
+/.venv/
+/small_erp/.venv/

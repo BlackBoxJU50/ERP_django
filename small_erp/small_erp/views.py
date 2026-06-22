@@ -25,7 +25,7 @@ def homePage(request)  :
 
 
 def aboutUs(request):
-    return HttpResponse("This is the about us page of our small ERP system.")   
+    return render(request,"about.html")
 def course(request):
     return render(request,"course.html")
 def finance(request):

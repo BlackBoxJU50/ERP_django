@@ -1,0 +1,12 @@
+{% load static %}
+<header class="site-header">
+  <div class="container">
+    <h1 class="brand">SimpleERP</h1>
+    <nav class="nav">
+        <a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+        <a class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
+        <a class="{% if request.resolver_match.url_name == 'inventory' %}active{% endif %}" href="{% url 'inventory' %}">Inventory</a>
+        <a class="{% if request.resolver_match.url_name == 'finance' %}active{% endif %}" href="{% url 'finance' %}">Finance</a>
+    </nav>
+  </div>
+</header>

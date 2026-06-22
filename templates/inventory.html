@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+  <div class="panel">
+    <h2>Inventory</h2>
+    <p>This UI is a placeholder — no database yet. Add items later.</p>
+    <div style="margin:12px 0;">
+      <button class="btn">Add Item</button>
+      <button class="btn ghost">Import CSV</button>
+    </div>
+    <table style="width:100%; border-collapse:collapse;" border="1">
+      <thead>
+        <tr><th>SKU</th><th>Name</th><th>Stock</th><th>Location</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SKU-001</td><td>Example Product A</td><td>12</td><td>Warehouse A</td><td><a href="#">Edit</a> | <a href="#">Stock</a></td></tr>
+        <tr><td>SKU-002</td><td>Example Product B</td><td>8</td><td>Warehouse B</td><td><a href="#">Edit</a> | <a href="#">Stock</a></td></tr>
+        <tr><td>SKU-003</td><td>Example Product C</td><td>0</td><td>Warehouse A</td><td><a href="#">Edit</a> | <a href="#">Stock</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -21,8 +21,10 @@ from small_erp import views
 
 
 urlpatterns = [
-    path('', views.course, name='home'),
+    path('', views.homePage, name='home'),
     path('admin/', admin.site.urls),
     path('about/', views.aboutUs, name='about'),
-    path('course/<slug:courseid>', views.courseDetails, name='courseDetails'),
+    path('finance/', views.finance, name='finance'),
+    path('inventory/', views.inventory, name='inventory'),
+    # optional alternate path to home removed to avoid duplicate route names
 ]

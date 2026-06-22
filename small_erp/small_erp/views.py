@@ -35,4 +35,25 @@ def inventory(request):
 
 
 def inventory_form(request):
-    return render(request, "inventory_form.html")
+    if request.method == 'POST':
+        # read submitted form values
+        n = request.POST.get('name', '').strip()
+        try:
+            q = int(request.POST.get('quantity', 0) or 0)
+        except ValueError:
+            q = 0
+        try:
+            p = float(request.POST.get('price', 0) or 0)
+        except ValueError:
+            p = 0.0
+        print(n, p, q)
+        from django.shortcuts import redirect
+        return redirect('inventory')
+
+    # GET — allow pre-filling via querystring
+    initial = {
+        'name': request.GET.get('name', ''),
+        'quantity': request.GET.get('quantity', ''),
+        'price': request.GET.get('price', ''),
+    }
+    return render(request, "inventory_form.html", {'initial': initial})

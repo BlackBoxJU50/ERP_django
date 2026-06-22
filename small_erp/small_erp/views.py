@@ -32,3 +32,7 @@ def finance(request):
     return render(request,"finance.html")
 def inventory(request):
     return render(request,"inventory.html")
+
+
+def inventory_form(request):
+    return render(request, "inventory_form.html")

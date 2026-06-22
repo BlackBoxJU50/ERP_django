@@ -10,7 +10,7 @@ body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;margin:0;background:
 .nav{float:right}
 .nav a{margin-left:18px;text-decoration:none;color:#334155}
 /* Active nav link styling */
-.nav a.active{color:var(--accent);font-weight:600}
+.nav a.active{color:var(--accent);font-weight:600 }
 .hero{padding:40px 24px;background:transparent;text-align:left}
 .hero h2{font-size:28px;margin:0 0 8px}
 .hero p{color:var(--muted);margin:0 0 16px}

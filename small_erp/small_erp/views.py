@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 def homePage(request)  :
      data ={
@@ -31,26 +31,30 @@ def course(request):
 def finance(request):
     return render(request,"finance.html")
 def inventory(request):
-    return render(request,"inventory.html")
+    if request.method=="GET":
+        output = request.GET.get('output')
+    
+    return render(request,"inventory.html", {'output': output})
 
 
 def inventory_form(request):
+    from django.shortcuts import redirect
+
     if request.method == 'POST':
-        # read submitted form values
-        n = request.POST.get('name', '').strip()
+        # process submitted form values
+        name = request.POST.get('name', '').strip()
         try:
-            q = int(request.POST.get('quantity', 0) or 0)
+            quantity = int(request.POST.get('quantity') or 0)
         except ValueError:
-            q = 0
+            quantity = 0
         try:
-            p = float(request.POST.get('price', 0) or 0)
+            price = float(request.POST.get('price') or 0)
         except ValueError:
-            p = 0.0
-        print(n, p, q)
-        from django.shortcuts import redirect
+            price = 0.0
+        print(name, quantity, price)
         return redirect('inventory')
 
-    # GET — allow pre-filling via querystring
+    # GET — render the form and allow pre-filling via querystring
     initial = {
         'name': request.GET.get('name', ''),
         'quantity': request.GET.get('quantity', ''),

@@ -26,6 +26,7 @@ urlpatterns = [
     path('about/', views.aboutUs, name='about'),
     path('finance/', views.finance, name='finance'),
     path('inventory/', views.inventory, name='inventory'),
-        path('inventory/add/', views.inventory_form, name='inventory_add'),
+    path('inventory/add/', views.inventory_form, name='inventory_add'),
+    path('calculator/', views.calShow, name='calculator'),
     # optional alternate path to home removed to avoid duplicate route names
 ]

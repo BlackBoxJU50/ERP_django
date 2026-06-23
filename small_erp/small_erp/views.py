@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from urllib.parse import urlencode
+from .forms import usersForms, InventoryForm
 def homePage(request)  :
      data ={
          'title':"Home Page",
@@ -45,19 +46,31 @@ def inventory(request):
 
 def inventory_form(request):
     if request.method == 'POST':
-        # process submitted form values and pass them to inventory view via querystring
-        name = request.POST.get('name', '').strip()
-        quantity = request.POST.get('quantity', '').strip()
-        price = request.POST.get('price', '').strip()
+        form = InventoryForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            params = {'name': data['name'], 'quantity': data['quantity'], 'price': data['price']}
+            url = reverse('inventory') + '?' + urlencode(params)
+            return redirect(url)
+    else:
+        initial = {
+            'name': request.GET.get('name', ''),
+            'quantity': request.GET.get('quantity', ''),
+            'price': request.GET.get('price', ''),
+        }
+        form = InventoryForm(initial=initial)
 
-        params = {'name': name, 'quantity': quantity, 'price': price}
-        url = reverse('inventory') + '?' + urlencode(params)
-        return redirect(url)
+    return render(request, "inventory_form.html", {'form': form})
+def calShow(request):
+    try:
+        if request.method=="POST":
+            n1= int(request.POST.get('num1'))
+            n2=int(request.POST.get('num2'))
+            opr=request.POST.get('opr')
+            if opr=='+':
+                c= n1 + n1
+                
+    except :
+        print(e)
 
-    # GET — render the form and allow pre-filling via querystring
-    initial = {
-        'name': request.GET.get('name', ''),
-        'quantity': request.GET.get('quantity', ''),
-        'price': request.GET.get('price', ''),
-    }
-    return render(request, "inventory_form.html", {'initial': initial})
+    return render(request, "sample_cal.html")

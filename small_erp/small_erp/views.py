@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from urllib.parse import urlencode
 def homePage(request)  :
      data ={
          'title':"Home Page",
@@ -31,28 +33,26 @@ def course(request):
 def finance(request):
     return render(request,"finance.html")
 def inventory(request):
-    if request.method=="GET":
-        output = request.GET.get('output')
-    
-    return render(request,"inventory.html", {'output': output})
+    # Read values passed via querystring and show them (no DB)
+    name = request.GET.get('name', '')
+    quantity = request.GET.get('quantity', '')
+    price = request.GET.get('price', '')
+    output = None
+    if name or quantity or price:
+        output = {'name': name, 'quantity': quantity, 'price': price}
+    return render(request, "inventory.html", {'output': output})
 
 
 def inventory_form(request):
-    from django.shortcuts import redirect
-
     if request.method == 'POST':
-        # process submitted form values
+        # process submitted form values and pass them to inventory view via querystring
         name = request.POST.get('name', '').strip()
-        try:
-            quantity = int(request.POST.get('quantity') or 0)
-        except ValueError:
-            quantity = 0
-        try:
-            price = float(request.POST.get('price') or 0)
-        except ValueError:
-            price = 0.0
-        print(name, quantity, price)
-        return redirect('inventory')
+        quantity = request.POST.get('quantity', '').strip()
+        price = request.POST.get('price', '').strip()
+
+        params = {'name': name, 'quantity': quantity, 'price': price}
+        url = reverse('inventory') + '?' + urlencode(params)
+        return redirect(url)
 
     # GET — render the form and allow pre-filling via querystring
     initial = {

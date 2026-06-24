@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Finance{% endblock %}
+{% block content %}
+
+    <section class="hero">
+        <h2>Welcome to {{ title|default:"SimpleERP" }}. {{ description }}</h2>
+        <p>A lightweight, easy-to-use ERP dashboard for small businesses.</p>
+        <div class="cta-row">
+            <a class="btn" href="#">Get Started</a>
+            <a class="btn ghost" href="{% url 'calculator' %}">Learn More</a>
+        </div>
+    </section>
+
+    <div>
+        {% for n in module %}
+        <div class="card">
+            <h3>{{ n.name }}</h3>
+            <p>{{ n.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <table border="1" style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            {% for n in module %}
+            <tr>
+                <td>{{ n.id }}</td>
+                <td>{{ n.name }}</td>
+                <td>{{ n.description }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

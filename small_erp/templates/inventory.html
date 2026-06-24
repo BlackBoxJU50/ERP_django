@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Inventory</h2>
+  <div style="margin:12px 0;">
+    <a class="btn" href="{% url 'inventory_add' %}">Add Item</a>
+    <button class="btn ghost">Import CSV</button>
+  </div>
+  <table style="width:100%; border-collapse:collapse;" border="1">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for servicesData in servicesData %}
+      <tr>
+        <td>{{servicesData.id}}</td>
+        <td>{{servicesData.name}}</td>
+        <td>{{servicesData.quantity}}</td>
+        <td>{{servicesData.price}}</td>
+        <td><a href="{% url 'inventory_add' %}">Edit</a> | <a href="#">Stock</a></td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+{% endblock %}

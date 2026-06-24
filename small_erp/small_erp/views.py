@@ -1,8 +1,12 @@
+from logging import error
+from django.http import response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from urllib.parse import urlencode
+# pyrefly: ignore [missing-import]
 from .forms import usersForms, InventoryForm
+from service.models import service
 def homePage(request)  :
      data ={
          'title':"Home Page",
@@ -34,14 +38,19 @@ def course(request):
 def finance(request):
     return render(request,"finance.html")
 def inventory(request):
-    # Read values passed via querystring and show them (no DB)
-    name = request.GET.get('name', '')
-    quantity = request.GET.get('quantity', '')
-    price = request.GET.get('price', '')
-    output = None
-    if name or quantity or price:
-        output = {'name': name, 'quantity': quantity, 'price': price}
-    return render(request, "inventory.html", {'output': output})
+    # servicesData= service.objects.all()
+    # print(servicesData)
+    # # Read values passed via querystring and show them (no DB)
+    # name = request.GET.get('name', '')
+    # quantity = request.GET.get('quantity', '')
+    # price = request.GET.get('price', '')
+    # output = None
+    # if name or quantity or price:
+    #     output = {'name': name, 'quantity': quantity, 'price': price}
+    data ={
+        'servicesData':service.objects.all().order_by('name')
+    }
+    return render(request, "inventory.html", data)
 
 
 def inventory_form(request):
@@ -62,15 +71,25 @@ def inventory_form(request):
 
     return render(request, "inventory_form.html", {'form': form})
 def calShow(request):
+    c=''
+    error = None
+    if request.POST.get('num1')=='' or request.POST.get('num2') == '':
+        error = "Please provide both values."
     try:
         if request.method=="POST":
             n1= int(request.POST.get('num1'))
             n2=int(request.POST.get('num2'))
             opr=request.POST.get('opr')
             if opr=='+':
-                c= n1 + n1
-                
-    except :
-        print(e)
+                c= n1 + n2
+            elif opr=='-':
+                c= n1 - n2
+            elif opr=='*':
+                c= n1 * n2
+            elif opr=='/':
+                c= n1 / n2
+            
+    except Exception as e:
+        return HttpResponse(e)
 
-    return render(request, "sample_cal.html")
+    return render(request, "sample_cal.html", {'c':c, 'error':error})

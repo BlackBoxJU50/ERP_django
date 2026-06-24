@@ -22,7 +22,7 @@ from small_erp import views
 
 urlpatterns = [
     path('', views.homePage, name='home'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('about/', views.aboutUs, name='about'),
     path('finance/', views.finance, name='finance'),
     path('inventory/', views.inventory, name='inventory'),
